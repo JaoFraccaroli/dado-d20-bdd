@@ -39,15 +39,15 @@ export default function DadoD20({ valor, estilos }) {
                     <polygon points={pontos(HEXAGONO)} />
                 </clipPath>
 
-                {/* Galáxia: núcleo claro e dourado, braços verde-azulados, espaço escuro */}
+                {/* Galáxia: núcleo azul-claro, braços azuis, espaço escuro */}
                 <radialGradient id="galaxia-fundo" cx="38%" cy="36%" r="75%">
-                    <stop offset="0%" stopColor="#fffdf2" />
-                    <stop offset="12%" stopColor="#fbeab4" />
-                    <stop offset="28%" stopColor="#e2b867" />
-                    <stop offset="45%" stopColor="#4f8f86" />
-                    <stop offset="65%" stopColor="#1c4652" />
-                    <stop offset="85%" stopColor="#0c1e33" />
-                    <stop offset="100%" stopColor="#060b1c" />
+                    <stop offset="0%" stopColor="#eaf6ff" />
+                    <stop offset="12%" stopColor="#a8d8ff" />
+                    <stop offset="28%" stopColor="#4f9be0" />
+                    <stop offset="45%" stopColor="#2a62a8" />
+                    <stop offset="65%" stopColor="#173a72" />
+                    <stop offset="85%" stopColor="#0b1a3d" />
+                    <stop offset="100%" stopColor="#050a1c" />
                 </radialGradient>
                 <filter id="desfoque">
                     <feGaussianBlur stdDeviation="5" />
