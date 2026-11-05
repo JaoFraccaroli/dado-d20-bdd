@@ -4,6 +4,8 @@
 
 Simulador de um dado de 20 faces (D20), como os usados em RPG de mesa, feito em **Next.js/React** e testado com **BDD**: o comportamento esperado está descrito em **Gherkin, em português**, e é automatizado com **Cucumber + Playwright**.
 
+**[▶ Usar agora no navegador](https://jaofraccaroli.github.io/dado-d20-bdd/)** · **[⬇ Baixar o app Android (APK)](https://github.com/JaoFraccaroli/dado-d20-bdd/releases/download/app-android/rolador-d20.apk)**
+
 ![Prévia: dados Galáxia e Rubi, com acerto e falha crítica](docs/previa.png)
 
 ## Visual
@@ -96,9 +98,30 @@ features/
     └── pagina-dado.js            # Page Object (inclui o controle do sorteio)
 components/DadoD20.js             # desenho do D20 em SVG
 lib/dado.js                       # sorteio, crítico/falha e vantagem/desvantagem
+public/                           # manifest, service worker e ícones do PWA
+capacitor.config.json             # configuração do app Android
 pages/index.js                    # página do dado
 styles/                           # visual
 ```
+
+## Use no celular
+
+O rolador funciona como app no celular, inclusive **sem internet**.
+
+**Android, pelo APK**
+1. No celular, abra o link [rolador-d20.apk](https://github.com/JaoFraccaroli/dado-d20-bdd/releases/download/app-android/rolador-d20.apk) e baixe o arquivo.
+2. Abra o arquivo baixado. O Android vai pedir para **permitir a instalação de apps desta fonte**: permita e toque em **Instalar**.
+3. O app "Rolador de D20" aparece na tela inicial.
+
+**Qualquer celular, pelo navegador (PWA)**
+1. Abra [jaofraccaroli.github.io/dado-d20-bdd](https://jaofraccaroli.github.io/dado-d20-bdd/) no Chrome (Android) ou no Safari (iPhone).
+2. No menu do navegador, toque em **Instalar app** ou **Adicionar à tela inicial**.
+
+### Como isso foi feito
+
+- **PWA**: o Next.js gera uma versão estática do site (`output: "export"`), publicada no **GitHub Pages** a cada push. Um `manifest.webmanifest` define nome, ícones e cores, e um **service worker** (`public/sw.js`) guarda os arquivos para o app abrir offline.
+- **APK**: o **Capacitor** coloca o mesmo site dentro de um app Android. O GitHub Actions monta o projeto Android, gera o ícone e a tela de abertura e compila o APK, que fica disponível na página de **Releases**. A chave de assinatura é sempre a mesma (`android-keystore/`), então uma versão nova instala por cima da antiga.
+- Os ícones são gerados por código: `scripts/gerar_icones.py`.
 
 ## Como rodar
 
