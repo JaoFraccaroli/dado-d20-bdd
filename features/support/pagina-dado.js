@@ -43,6 +43,14 @@ export class PaginaDado {
         return Number(await this.resultado().textContent())
     }
 
+    async escolherModelo(nome) {
+        await this.page.getByRole("button", { name: nome }).click()
+    }
+
+    async modeloAtual() {
+        return this.dado().getAttribute("data-modelo")
+    }
+
     async corDoNumero() {
         return this.resultado().evaluate((el) => getComputedStyle(el).color)
     }

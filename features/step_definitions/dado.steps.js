@@ -5,12 +5,16 @@ import { PaginaDado } from "../support/pagina-dado.js"
 const CORES = {
     verde: "rgb(34, 197, 94)",
     vermelho: "rgb(239, 68, 68)",
-    normal: "rgb(241, 245, 249)",
+    normal: "rgb(255, 255, 255)",
 }
 
 Given("que estou na página do dado", async function () {
     this.pagina = new PaginaDado(this.page, this.baseUrl)
     await this.pagina.abrir()
+})
+
+Given("que escolhi o dado {string}", async function (modelo) {
+    await this.pagina.escolherModelo(modelo)
 })
 
 Given("que o próximo resultado do dado será {int}", async function (valor) {
@@ -55,7 +59,7 @@ Then("o número deve aparecer em vermelho", async function () {
     expect(await this.pagina.corDoNumero()).toBe(CORES.vermelho)
 })
 
-Then("o número deve aparecer na cor normal", async function () {
+Then("o número deve aparecer em branco", async function () {
     expect(await this.pagina.corDoNumero()).toBe(CORES.normal)
 })
 
@@ -93,4 +97,8 @@ Then("todos os resultados devem estar entre 1 e 20", function () {
 
 Then("deve ter saído mais de um valor diferente", function () {
     expect(new Set(this.resultados).size).toBeGreaterThan(1)
+})
+
+Then("o dado escolhido deve ser o {string}", async function (modelo) {
+    expect(await this.pagina.modeloAtual()).toBe(modelo)
 })

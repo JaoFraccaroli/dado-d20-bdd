@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import estilos from "../styles/Dado.module.css"
+import DadoD20 from "../components/DadoD20"
 import { sortearD20, tipoDoResultado } from "../lib/dado"
 
 const TAMANHO_HISTORICO = 10
 
+const MODELOS = [
+    { id: "galaxia", nome: "Galáxia" },
+    { id: "rubi", nome: "Rubi" },
+]
 
 const MENSAGENS = {
     critico: "Acerto crítico!",
@@ -15,6 +20,7 @@ export default function Home() {
     const [rolando, setRolando] = useState(false)
     const [historico, setHistorico] = useState([])
     const [totalRolagens, setTotalRolagens] = useState(0)
+    const [modelo, setModelo] = useState("galaxia")
     const intervalo = useRef(null)
 
     useEffect(() => () => clearInterval(intervalo.current), [])
@@ -42,7 +48,7 @@ export default function Home() {
         intervalo.current = setInterval(() => {
             setValor(sortearD20())
             passos++
-            if (passos >= 10) {
+            if (passos >= 12) {
                 clearInterval(intervalo.current)
                 finalizar(resultado)
             }
@@ -55,21 +61,35 @@ export default function Home() {
         <main className={estilos.pagina} data-rolagens={totalRolagens}>
             <h1 className={estilos.titulo}>Rolador de D20</h1>
 
-            <div className={`${estilos.moldura} ${estilos[tipo]}`}>
+            <div className={estilos.modelos} role="group" aria-label="Escolha o dado">
+                {MODELOS.map((m) => (
+                    <button
+                        key={m.id}
+                        className={`${estilos.botaoModelo} ${estilos["amostra_" + m.id]}`}
+                        aria-pressed={modelo === m.id}
+                        onClick={() => setModelo(m.id)}
+                        disabled={rolando}
+                    >
+                        {m.nome}
+                    </button>
+                ))}
+            </div>
+
+            <div className={estilos.mesa}>
                 <div
-                    className={`${estilos.dado} ${rolando ? estilos.rolando : ""}`}
+                    className={`${estilos.dado} ${estilos[modelo]} ${estilos[tipo] || ""} ${rolando ? estilos.rolando : ""}`}
                     data-testid="dado"
+                    data-modelo={modelo}
                     data-estado={rolando ? "rolando" : "parado"}
                     data-tipo={tipo}
                     aria-live="polite"
                 >
-                    <span className={estilos.numero} data-testid="resultado">
-                        {valor === null ? "?" : valor}
-                    </span>
+                    <DadoD20 valor={valor} estilos={estilos} />
                 </div>
+                <div className={`${estilos.sombra} ${rolando ? estilos.sombraRolando : ""}`} />
             </div>
 
-            <p className={`${estilos.mensagem} ${estilos[tipo]}`} data-testid="mensagem">
+            <p className={`${estilos.mensagem} ${estilos[tipo] || ""}`} data-testid="mensagem">
                 {!rolando && MENSAGENS[tipo] ? MENSAGENS[tipo] : " "}
             </p>
 
@@ -84,7 +104,7 @@ export default function Home() {
                 ) : (
                     <ol>
                         {historico.map((r, i) => (
-                            <li key={i} className={estilos[tipoDoResultado(r)]} data-testid="historico-item">
+                            <li key={i} className={estilos[tipoDoResultado(r)] || ""} data-testid="historico-item">
                                 {r}
                             </li>
                         ))}

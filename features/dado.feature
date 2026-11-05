@@ -25,11 +25,27 @@ Funcionalidade: Rolagem de um dado de 20 faces (D20)
     E o número deve aparecer em vermelho
     E deve aparecer a mensagem "Falha crítica!"
 
+  Cenário: O dado começa no modelo Galáxia
+    Então o dado escolhido deve ser o "galaxia"
+
+  Esquema do Cenário: As regras de cor valem nos dois modelos de dado
+    Dado que escolhi o dado "<modelo>"
+    E que o próximo resultado do dado será <resultado>
+    Quando eu rolo o dado
+    Então o dado escolhido deve ser o "<id>"
+    E o número deve aparecer em <cor>
+
+    Exemplos:
+      | modelo  | id      | resultado | cor      |
+      | Rubi    | rubi    | 1         | vermelho |
+      | Rubi    | rubi    | 20        | verde    |
+      | Galáxia | galaxia | 1         | vermelho |
+
   Esquema do Cenário: Resultados comuns aparecem na cor normal, sem mensagem
     Dado que o próximo resultado do dado será <resultado>
     Quando eu rolo o dado
     Então o resultado deve ser <resultado>
-    E o número deve aparecer na cor normal
+    E o número deve aparecer em branco
     E não deve aparecer mensagem de crítico
 
     Exemplos:

@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 48px 16px;
-    gap: 20px;
+    padding: 40px 16px;
+    gap: 18px;
 }
 
 .titulo {
@@ -12,93 +12,186 @@
     font-size: 2rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #c7d2fe;
+    color: #fde7c8;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
 }
 
-/* Formato de D20 visto de frente (hexágono) */
-.dado {
-    width: 220px;
-    height: 250px;
+/* ---------- Escolha do dado ---------- */
+.modelos {
+    display: flex;
+    gap: 10px;
+}
+
+.botaoModelo {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: 0.65;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.botaoModelo[aria-pressed="true"] {
+    opacity: 1;
+    border-color: #fde7c8;
+}
+
+.amostra_galaxia {
+    background: radial-gradient(circle at 30% 30%, #34477a, #121a33);
+}
+
+.amostra_rubi {
+    background: radial-gradient(circle at 30% 30%, #ff5c86, #a3123a);
+}
+
+/* ---------- Mesa e dado ---------- */
+.mesa {
+    position: relative;
+    width: 260px;
+    height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    background: linear-gradient(160deg, #3730a3 0%, #1e1b4b 60%, #0f0a2e 100%);
-    transition: background 0.3s;
+}
+
+.dado {
+    width: 230px;
+    height: 230px;
     position: relative;
-}
-
-/* Triângulo central, como a face de um D20 */
-.dado::before {
-    content: "";
-    position: absolute;
-    inset: 22% 18% 18% 18%;
-    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.numero {
-    position: relative;
-    font-size: 5rem;
-    font-weight: 800;
-    color: #f1f5f9;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* Brilho em volta do dado conforme o resultado */
-.moldura {
-    filter: drop-shadow(0 0 18px rgba(99, 102, 241, 0.45));
+    z-index: 1;
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.45));
     transition: filter 0.3s;
 }
 
-.moldura.critico {
-    filter: drop-shadow(0 0 26px rgba(34, 197, 94, 0.8));
+.svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
-.moldura.falha {
-    filter: drop-shadow(0 0 26px rgba(239, 68, 68, 0.8));
+.sombra {
+    position: absolute;
+    bottom: 14px;
+    width: 170px;
+    height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 70%);
 }
 
-/* 20 = número verde, 1 = número vermelho */
-.moldura.critico .numero,
+/* Modelo Galáxia: azul-escuro com purpurina dourada */
+.galaxia .faceTopo { fill: #2c3c6b; }
+.galaxia .faceVizinha { fill: #1d2a50; }
+.galaxia .faceBorda { fill: #111933; }
+.galaxia .faceTopo, .galaxia .faceVizinha, .galaxia .faceBorda { stroke: #0a1024; stroke-width: 1.5; }
+.galaxia .purpurina { fill: #e8c96b; opacity: 0.75; }
+
+/* Modelo Rubi: vermelho translúcido */
+.rubi .faceTopo { fill: #ff4f7b; fill-opacity: 0.88; }
+.rubi .faceVizinha { fill: #d81c4e; fill-opacity: 0.88; }
+.rubi .faceBorda { fill: #9e0f35; fill-opacity: 0.9; }
+.rubi .faceTopo, .rubi .faceVizinha, .rubi .faceBorda { stroke: #7a0a28; stroke-width: 1.5; }
+.rubi .camadaBrilho { display: none; }
+
+/* Números brancos, como no dado real */
+.numero {
+    font-size: 46px;
+    font-weight: 800;
+    fill: currentColor;
+    color: #ffffff;
+    paint-order: stroke;
+    stroke: rgba(0, 0, 0, 0.35);
+    stroke-width: 2px;
+}
+
+.numeroVizinho {
+    font-size: 17px;
+    font-weight: 700;
+    fill: #ffffff;
+    opacity: 0.8;
+}
+
+/* 20 = número verde, 1 = número vermelho, com contorno branco e brilho no dado */
+.dado.critico .numero {
+    color: #22c55e;
+    stroke: #ffffff;
+    stroke-width: 5px;
+}
+
+.dado.falha .numero {
+    color: #ef4444;
+    stroke: #ffffff;
+    stroke-width: 5px;
+}
+
+.dado.critico {
+    filter: drop-shadow(0 0 16px rgba(34, 197, 94, 0.95)) drop-shadow(0 6px 4px rgba(0, 0, 0, 0.45));
+}
+
+.dado.falha {
+    filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.95)) drop-shadow(0 6px 4px rgba(0, 0, 0, 0.45));
+}
+
+/* Animação: o dado gira e quica na mesa */
+.rolando {
+    animation: rolar 0.72s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@keyframes rolar {
+    0%   { transform: translate(-90px, -70px) rotate(-260deg) scale(0.85); }
+    45%  { transform: translate(20px, 10px) rotate(-40deg) scale(1.02); }
+    65%  { transform: translate(-6px, -14px) rotate(15deg) scale(1); }
+    80%  { transform: translate(4px, 4px) rotate(-6deg) scale(1); }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+.sombraRolando {
+    animation: sombra 0.72s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@keyframes sombra {
+    0%   { transform: translateX(-90px) scale(0.5); opacity: 0.3; }
+    45%  { transform: translateX(20px) scale(1); opacity: 1; }
+    65%  { transform: translateX(-6px) scale(0.85); }
+    100% { transform: translateX(0) scale(1); }
+}
+
+/* ---------- Mensagem, botão e histórico ---------- */
+.mensagem {
+    margin: 0;
+    min-height: 1.6em;
+    padding: 4px 18px;
+    border-radius: 999px;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.mensagem.critico,
+.mensagem.falha {
+    background: rgba(15, 8, 4, 0.7);
+}
+
 .mensagem.critico,
 .historico li.critico {
     color: #22c55e;
 }
 
-.moldura.falha .numero,
 .mensagem.falha,
 .historico li.falha {
     color: #ef4444;
 }
 
-.rolando {
-    animation: girar 0.6s ease-out;
-}
-
-@keyframes girar {
-    0% { transform: rotate(0deg) scale(0.9); }
-    50% { transform: rotate(200deg) scale(1.05); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
-.mensagem {
-    margin: 0;
-    min-height: 1.6em;
-    font-size: 1.4rem;
-    font-weight: 700;
-}
-
 .botao {
-    padding: 14px 40px;
+    padding: 14px 44px;
     font-size: 1.1rem;
-    font-weight: 700;
-    color: #0f172a;
-    background: #facc15;
+    font-weight: 800;
+    color: #3b1d0b;
+    background: linear-gradient(180deg, #fde7c8, #f2c48d);
     border: none;
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(250, 204, 21, 0.35);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
     transition: transform 0.1s, opacity 0.2s;
 }
 
@@ -113,14 +206,18 @@
 
 .historico {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
+    padding: 12px 16px 16px;
+    border-radius: 16px;
+    background: rgba(20, 10, 4, 0.55);
     text-align: center;
 }
 
 .historico h2 {
+    margin: 4px 0 12px;
     font-size: 1rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: #e9cfae;
 }
 
 .historico ol {
@@ -138,10 +235,11 @@
     padding: 8px 10px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.08);
-    font-weight: 700;
-    color: #e2e8f0;
+    font-weight: 800;
+    color: #fdf2e3;
 }
 
 .vazio {
-    color: #64748b;
+    margin: 0;
+    color: #c9a982;
 }

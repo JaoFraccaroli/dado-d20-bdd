@@ -4,13 +4,22 @@
 
 Simulador de um dado de 20 faces (D20), como os usados em RPG de mesa, feito em **Next.js/React** e testado com **BDD**: o comportamento esperado está descrito em **Gherkin, em português**, e é automatizado com **Cucumber + Playwright**.
 
-![Prévia: falha crítica e acerto crítico](docs/previa.png)
+![Prévia: dados Galáxia e Rubi, com acerto e falha crítica](docs/previa.png)
+
+## Visual
+
+Inspirado em dois dados de verdade sobre uma mesa de madeira: o dado aparece visto de cima, com a face sorteada no centro e as faces vizinhas em volta. Dá para escolher entre dois modelos:
+
+- **Galáxia**: azul-escuro com purpurina dourada
+- **Rubi**: vermelho translúcido
 
 ## Regras
 
 - Clicar em **Rolar D20** sorteia um número de 1 a 20, com uma animação curta.
+- Os números são brancos, como no dado real.
 - **20** aparece em **verde**, com a mensagem "Acerto crítico!".
 - **1** aparece em **vermelho**, com a mensagem "Falha crítica!".
+- Nos dois casos o número ganha contorno branco e o dado brilha, para o 1 vermelho continuar visível no dado Rubi.
 - As **10 últimas rolagens** ficam no histórico, a mais recente primeiro, com as mesmas cores.
 - Quem configurou o sistema para "reduzir movimento" vê o resultado sem animação (acessibilidade).
 
@@ -31,14 +40,16 @@ Para o sorteio de verdade, um cenário rola o dado **100 vezes** sem controle e 
 
 ## Cenários
 
-Arquivo [`features/dado.feature`](features/dado.feature), 9 execuções no total:
+Arquivo [`features/dado.feature`](features/dado.feature), 13 execuções no total:
 
 | Cenário | O que verifica |
 |---|---|
 | Antes da primeira rolagem | Dado mostra "?" e histórico vazio |
 | Tirar 20 | Número verde e mensagem de acerto crítico |
 | Tirar 1 | Número vermelho e mensagem de falha crítica |
-| Resultados comuns (2, 10 e 19) | Cor normal e nenhuma mensagem de crítico |
+| Modelo inicial | O dado começa no modelo Galáxia |
+| Regras de cor nos dois modelos | 1 vermelho e 20 verde também no dado Rubi |
+| Resultados comuns (2, 10 e 19) | Número branco e nenhuma mensagem de crítico |
 | Histórico em ordem | Mais recente primeiro, com as cores certas |
 | Limite do histórico | No máximo 10 rolagens guardadas |
 | 100 rolagens | Todos os resultados entre 1 e 20 |
@@ -55,6 +66,7 @@ features/
 └── support/
     ├── hooks.js                  # abre e fecha o navegador
     └── pagina-dado.js            # Page Object (inclui o controle do sorteio)
+components/DadoD20.js             # desenho do D20 em SVG
 lib/dado.js                       # sorteio e regra de crítico/falha
 pages/index.js                    # página do dado
 styles/                           # visual
