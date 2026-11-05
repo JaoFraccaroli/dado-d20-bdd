@@ -41,7 +41,7 @@ Funcionalidade: Rolagem de um dado de 20 faces (D20)
       | Rubi    | rubi    | 20        | verde    |
       | Galáxia | galaxia | 1         | vermelho |
 
-  Esquema do Cenário: Resultados comuns aparecem na cor normal, sem mensagem
+  Esquema do Cenário: Resultados comuns aparecem em branco, sem mensagem
     Dado que o próximo resultado do dado será <resultado>
     Quando eu rolo o dado
     Então o resultado deve ser <resultado>

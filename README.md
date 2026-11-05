@@ -13,6 +13,17 @@ Inspirado em dois dados de verdade sobre uma mesa de madeira: o dado aparece vis
 - **Galáxia**: núcleo azul-claro, braços azuis e estrelas, como uma galáxia espiral
 - **Rubi**: vermelho profundo lapidado, com reflexos brancos como uma pedra preciosa
 
+## Vantagem e desvantagem
+
+Além do modo **Normal** (um dado), dá para rolar **dois D20 de uma vez**:
+
+- **Vantagem**: fica o maior resultado
+- **Desvantagem**: fica o menor resultado
+
+Os dois resultados aparecem: o dado que fica ganha um leve zoom e o selo "Fica", e o outro fica **cinza** com o selo "Descartado". Cada dado tem o seu modelo, então dá para rolar dois Galáxia, dois Rubi ou um de cada. No histórico aparece o resultado que ficou, o descartado riscado e a marcação V ou D.
+
+![Vantagem e desvantagem](docs/vantagem.png)
+
 ## Regras
 
 - Clicar em **Rolar D20** sorteia um número de 1 a 20, com uma animação curta.
@@ -25,7 +36,7 @@ Inspirado em dois dados de verdade sobre uma mesa de madeira: o dado aparece vis
 
 ## Como testar algo aleatório?
 
-Não dá para escrever "Então o resultado deve ser 20" se o dado sorteia um número diferente a cada vez. A solução usada aqui é **controlar o sorteio no teste**: o Page Object substitui o `Math.random` da página antes da rolagem, forçando o resultado que o cenário precisa.
+Não dá para escrever "Então o resultado deve ser 20" se o dado sorteia um número diferente a cada vez. A solução usada aqui é **controlar o sorteio no teste**: o Page Object substitui o `Math.random` da página antes da rolagem, forçando o resultado que o cenário precisa. Com dois dados, ele recebe uma fila de valores (o primeiro para o dado 1, o segundo para o dado 2).
 
 ```gherkin
 Cenário: Tirar 20 é um acerto crítico com o número em verde
@@ -40,7 +51,9 @@ Para o sorteio de verdade, um cenário rola o dado **100 vezes** sem controle e 
 
 ## Cenários
 
-Arquivo [`features/dado.feature`](features/dado.feature), 13 execuções no total:
+Arquivos [`features/dado.feature`](features/dado.feature) e [`features/vantagem_desvantagem.feature`](features/vantagem_desvantagem.feature), 27 execuções no total.
+
+Um dado:
 
 | Cenário | O que verifica |
 |---|---|
@@ -54,20 +67,35 @@ Arquivo [`features/dado.feature`](features/dado.feature), 13 execuções no tota
 | Limite do histórico | No máximo 10 rolagens guardadas |
 | 100 rolagens | Todos os resultados entre 1 e 20 |
 
-Para conferir que os testes pegam erros de verdade, foi feito um teste de mutação manual: trocar a regra do crítico de 20 para 19 faz 3 cenários falharem.
+Dois dados:
+
+| Cenário | O que verifica |
+|---|---|
+| Quantidade de dados | 1 dado no modo normal, 2 na vantagem e na desvantagem |
+| Vantagem com 7 e 15 | Os dois aparecem, fica o 15 em destaque e o 7 cinza |
+| Desvantagem com 7 e 15 | Fica o 7 em destaque e o 15 cinza |
+| Vantagem com 1 e 20 | Acerto crítico verde, 1 descartado |
+| Desvantagem com 1 e 20 | Falha crítica vermelha, 20 descartado |
+| Empate (12 e 12) | Um dado fica e o outro é descartado |
+| Modelo de cada dado | Galáxia + Galáxia, Rubi + Rubi e as duas misturas |
+| Histórico | Mostra o resultado que ficou e o descartado |
+| 100 rolagens em cada modo | O resultado é sempre o maior (vantagem) ou o menor (desvantagem) |
+
+Para conferir que os testes pegam erros de verdade, foi feito um teste de mutação manual: trocar a regra do crítico de 20 para 19 faz 3 cenários falharem, e inverter a regra da vantagem faz outros 4 falharem.
 
 ## Estrutura
 
 ```
 features/
-├── dado.feature                  # cenários em português
+├── dado.feature                  # cenários de um dado
+├── vantagem_desvantagem.feature  # cenários de dois dados
 ├── step_definitions/
 │   └── dado.steps.js             # ligação entre as frases e o código
 └── support/
     ├── hooks.js                  # abre e fecha o navegador
     └── pagina-dado.js            # Page Object (inclui o controle do sorteio)
 components/DadoD20.js             # desenho do D20 em SVG
-lib/dado.js                       # sorteio e regra de crítico/falha
+lib/dado.js                       # sorteio, crítico/falha e vantagem/desvantagem
 pages/index.js                    # página do dado
 styles/                           # visual
 ```
