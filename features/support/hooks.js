@@ -1,7 +1,7 @@
 import { After, AfterAll, Before, BeforeAll, setDefaultTimeout } from "@cucumber/cucumber"
 import { chromium } from "playwright"
 
-setDefaultTimeout(30 * 1000)
+setDefaultTimeout(60 * 1000)
 
 let browser
 
@@ -10,7 +10,8 @@ BeforeAll(async function () {
 })
 
 Before(async function () {
-    this.context = await browser.newContext()
+    // reducedMotion: a página mostra o resultado sem a animação, deixando os testes rápidos
+    this.context = await browser.newContext({ reducedMotion: "reduce" })
     this.page = await this.context.newPage()
     this.baseUrl = process.env.BASE_URL || "http://localhost:3000"
 })

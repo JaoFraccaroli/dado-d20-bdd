@@ -1,0 +1,147 @@
+.pagina {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 16px;
+    gap: 20px;
+}
+
+.titulo {
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #c7d2fe;
+}
+
+/* Formato de D20 visto de frente (hexágono) */
+.dado {
+    width: 220px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(160deg, #3730a3 0%, #1e1b4b 60%, #0f0a2e 100%);
+    transition: background 0.3s;
+    position: relative;
+}
+
+/* Triângulo central, como a face de um D20 */
+.dado::before {
+    content: "";
+    position: absolute;
+    inset: 22% 18% 18% 18%;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.numero {
+    position: relative;
+    font-size: 5rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Brilho em volta do dado conforme o resultado */
+.moldura {
+    filter: drop-shadow(0 0 18px rgba(99, 102, 241, 0.45));
+    transition: filter 0.3s;
+}
+
+.moldura.critico {
+    filter: drop-shadow(0 0 26px rgba(34, 197, 94, 0.8));
+}
+
+.moldura.falha {
+    filter: drop-shadow(0 0 26px rgba(239, 68, 68, 0.8));
+}
+
+/* 20 = número verde, 1 = número vermelho */
+.moldura.critico .numero,
+.mensagem.critico,
+.historico li.critico {
+    color: #22c55e;
+}
+
+.moldura.falha .numero,
+.mensagem.falha,
+.historico li.falha {
+    color: #ef4444;
+}
+
+.rolando {
+    animation: girar 0.6s ease-out;
+}
+
+@keyframes girar {
+    0% { transform: rotate(0deg) scale(0.9); }
+    50% { transform: rotate(200deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.mensagem {
+    margin: 0;
+    min-height: 1.6em;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.botao {
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: #facc15;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(250, 204, 21, 0.35);
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.botao:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.botao:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.historico {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+
+.historico h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.historico ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.historico li {
+    min-width: 44px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+.vazio {
+    color: #64748b;
+}

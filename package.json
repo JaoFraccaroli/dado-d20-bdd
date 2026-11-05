@@ -1,8 +1,8 @@
 {
-  "name": "contador",
+  "name": "dado-d20-bdd",
   "version": "1.0.0",
   "type": "module",
-  "description": "Contador em Next.js com testes BDD (Cucumber + Playwright) escritos em português",
+  "description": "Rolador de D20 em Next.js com testes BDD (Cucumber + Playwright) escritos em português",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -11,17 +11,9 @@
     "test:bdd": "cucumber-js",
     "test": "start-server-and-test dev http://localhost:3000 test:bdd"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JaoFraccaroli/Contador.git"
-  },
   "keywords": [],
   "author": "João Marcelo Fraccaroli Filho",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JaoFraccaroli/Contador/issues"
-  },
-  "homepage": "https://github.com/JaoFraccaroli/Contador#readme",
   "dependencies": {
     "next": "^16.2.4",
     "react": "^19.2.5",
@@ -32,5 +24,9 @@
     "@playwright/test": "1.63.0",
     "playwright": "1.63.0",
     "start-server-and-test": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaoFraccaroli/dado-d20-bdd.git"
   }
 }
