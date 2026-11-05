@@ -39,11 +39,12 @@
 }
 
 .amostra_galaxia {
-    background: radial-gradient(circle at 30% 30%, #34477a, #121a33);
+    background: radial-gradient(circle at 35% 35%, #fbeab4 0%, #e2b867 18%, #4f8f86 40%, #0c1e33 80%);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .amostra_rubi {
-    background: radial-gradient(circle at 30% 30%, #ff5c86, #a3123a);
+    background: radial-gradient(circle at 40% 40%, #ff2a3d, #c4001a 45%, #5a000b);
 }
 
 /* ---------- Mesa e dado ---------- */
@@ -80,19 +81,43 @@
     background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 70%);
 }
 
-/* Modelo Galáxia: azul-escuro com purpurina dourada */
-.galaxia .faceTopo { fill: #2c3c6b; }
-.galaxia .faceVizinha { fill: #1d2a50; }
-.galaxia .faceBorda { fill: #111933; }
-.galaxia .faceTopo, .galaxia .faceVizinha, .galaxia .faceBorda { stroke: #0a1024; stroke-width: 1.5; }
-.galaxia .purpurina { fill: #e8c96b; opacity: 0.75; }
+/* Camadas de fundo de cada modelo */
+.camadaGalaxia,
+.camadaRubi {
+    display: none;
+}
 
-/* Modelo Rubi: vermelho translúcido */
-.rubi .faceTopo { fill: #ff4f7b; fill-opacity: 0.88; }
-.rubi .faceVizinha { fill: #d81c4e; fill-opacity: 0.88; }
-.rubi .faceBorda { fill: #9e0f35; fill-opacity: 0.9; }
-.rubi .faceTopo, .rubi .faceVizinha, .rubi .faceBorda { stroke: #7a0a28; stroke-width: 1.5; }
-.rubi .camadaBrilho { display: none; }
+.galaxia .camadaGalaxia,
+.rubi .camadaRubi {
+    display: inline;
+}
+
+/* Modelo Galáxia: núcleo dourado, braços verde-azulados e estrelas */
+.galaxia .fundo { fill: url(#galaxia-fundo); }
+.bracoClaro { fill: none; stroke: #f6dc9c; stroke-width: 16; opacity: 0.55; }
+.bracoEscuro { fill: none; stroke: #0a2233; stroke-width: 18; opacity: 0.6; }
+.estrela { fill: #ffffff; opacity: 0.85; }
+
+.galaxia .faceTopo { fill: #ffffff; fill-opacity: 0.06; }
+.galaxia .faceVizinha { fill: #001018; fill-opacity: 0.22; }
+.galaxia .faceBorda { fill: #000814; fill-opacity: 0.45; }
+.galaxia .faceTopo, .galaxia .faceVizinha, .galaxia .faceBorda {
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 1.2;
+}
+
+/* Modelo Rubi: vermelho profundo lapidado com reflexos brancos */
+.rubi .fundo { fill: url(#rubi-fundo); }
+.reflexoForte { fill: #ffffff; opacity: 0.75; }
+.reflexoFraco { fill: #ffb3bd; opacity: 0.45; }
+
+.rubi .faceTopo { fill: #ff3348; fill-opacity: 0.18; }
+.rubi .faceVizinha { fill: #4a0008; fill-opacity: 0.25; }
+.rubi .faceBorda { fill: #2a0004; fill-opacity: 0.35; }
+.rubi .faceTopo, .rubi .faceVizinha, .rubi .faceBorda {
+    stroke: rgba(255, 170, 180, 0.45);
+    stroke-width: 1.2;
+}
 
 /* Números brancos, como no dado real */
 .numero {
@@ -101,15 +126,18 @@
     fill: currentColor;
     color: #ffffff;
     paint-order: stroke;
-    stroke: rgba(0, 0, 0, 0.35);
-    stroke-width: 2px;
+    stroke: rgba(0, 0, 0, 0.7);
+    stroke-width: 5px;
 }
 
 .numeroVizinho {
     font-size: 17px;
     font-weight: 700;
     fill: #ffffff;
-    opacity: 0.8;
+    opacity: 0.9;
+    paint-order: stroke;
+    stroke: rgba(0, 0, 0, 0.6);
+    stroke-width: 3px;
 }
 
 /* 20 = número verde, 1 = número vermelho, com contorno branco e brilho no dado */

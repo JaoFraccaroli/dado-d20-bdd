@@ -10,8 +10,8 @@ Simulador de um dado de 20 faces (D20), como os usados em RPG de mesa, feito em 
 
 Inspirado em dois dados de verdade sobre uma mesa de madeira: o dado aparece visto de cima, com a face sorteada no centro e as faces vizinhas em volta. Dá para escolher entre dois modelos:
 
-- **Galáxia**: azul-escuro com purpurina dourada
-- **Rubi**: vermelho translúcido
+- **Galáxia**: núcleo dourado, braços verde-azulados e estrelas, como uma galáxia espiral
+- **Rubi**: vermelho profundo lapidado, com reflexos brancos como uma pedra preciosa
 
 ## Regras
 
