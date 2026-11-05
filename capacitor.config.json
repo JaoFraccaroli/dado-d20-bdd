@@ -1,0 +1,8 @@
+{
+  "appId": "com.jaofraccaroli.dadod20",
+  "appName": "Rolador de D20",
+  "webDir": "out",
+  "android": {
+    "backgroundColor": "#5a2c14"
+  }
+}
