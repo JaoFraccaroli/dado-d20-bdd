@@ -122,6 +122,15 @@
     transform: scale(0.92);
 }
 
+.seloVazio {
+    visibility: hidden;
+}
+
+.areaBotao {
+    display: flex;
+    justify-content: center;
+}
+
 .selo {
     margin-top: 6px;
     padding: 2px 12px;
@@ -357,5 +366,112 @@
     .slot,
     .dado {
         transition: none;
+    }
+}
+
+/* ---------- Celular: tudo mais compacto, histórico logo abaixo dos dados e botão fixo no rodapé ---------- */
+@media (max-width: 640px) {
+    .pagina {
+        padding: 14px 10px 0;
+        gap: 10px;
+        min-height: 100dvh;
+    }
+
+    .titulo {
+        font-size: 1.35rem;
+    }
+
+    .botaoModo {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+
+    .botaoModelo {
+        padding: 6px 14px;
+        font-size: 0.9rem;
+    }
+
+    .seletores {
+        gap: 8px 16px;
+    }
+
+    .rotulo {
+        font-size: 0.9rem;
+    }
+
+    .mesa {
+        min-height: 0;
+        gap: 18px;
+        padding-top: 4px;
+    }
+
+    .dado {
+        width: 210px;
+        height: 210px;
+    }
+
+    .doisDados .dado {
+        width: 150px;
+        height: 150px;
+    }
+
+    .sombra {
+        height: 18px;
+        margin-top: -10px;
+    }
+
+    .selo {
+        margin-top: 2px;
+        font-size: 0.75rem;
+    }
+
+    .mensagem {
+        font-size: 1.1rem;
+        padding: 2px 14px;
+    }
+
+    /* Histórico sobe para logo abaixo dos dados e vira uma linha que rola para o lado */
+    .historico {
+        order: 1;
+        padding: 8px 10px 10px;
+    }
+
+    .historico h2 {
+        margin: 0 0 8px;
+        font-size: 0.85rem;
+    }
+
+    .historico ol {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+    }
+
+    .historico li {
+        flex: 0 0 auto;
+        padding: 6px 8px;
+    }
+
+    .vazio {
+        font-size: 0.85rem;
+    }
+
+    /* Botão de rolar sempre visível no rodapé */
+    .areaBotao {
+        order: 2;
+        position: sticky;
+        bottom: 0;
+        width: calc(100% + 20px);
+        margin-top: auto;
+        padding: 12px 10px calc(12px + env(safe-area-inset-bottom));
+        background: linear-gradient(180deg, transparent, rgba(30, 14, 5, 0.85) 35%);
+        z-index: 5;
+    }
+
+    .botao {
+        width: 100%;
+        max-width: 360px;
+        padding: 14px 0;
     }
 }

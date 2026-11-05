@@ -141,8 +141,10 @@ export default function Home() {
                                 <DadoD20 valor={valor} estilos={estilos} />
                             </div>
                             <div className={`${estilos.sombra} ${rolando ? estilos.sombraRolando : ""}`} />
-                            {quantidade === 2 && (situacao === "fica" || situacao === "descartado") && (
-                                <span className={estilos.selo}>{situacao === "fica" ? "Fica" : "Descartado"}</span>
+                            {quantidade === 2 && (
+                                <span className={`${estilos.selo} ${situacao === "fica" || situacao === "descartado" ? "" : estilos.seloVazio}`}>
+                                    {situacao === "descartado" ? "Descartado" : "Fica"}
+                                </span>
                             )}
                         </div>
                     )
@@ -153,9 +155,11 @@ export default function Home() {
                 {MENSAGENS[tipoFinal] ?? " "}
             </p>
 
-            <button className={estilos.botao} onClick={rolar} disabled={rolando} data-testid="botao-rolar">
-                {rolando ? "Rolando..." : quantidade === 1 ? "Rolar D20" : "Rolar 2 D20"}
-            </button>
+            <div className={estilos.areaBotao}>
+                <button className={estilos.botao} onClick={rolar} disabled={rolando} data-testid="botao-rolar">
+                    {rolando ? "Rolando..." : quantidade === 1 ? "Rolar D20" : "Rolar 2 D20"}
+                </button>
+            </div>
 
             <section className={estilos.historico}>
                 <h2>Últimas rolagens</h2>
